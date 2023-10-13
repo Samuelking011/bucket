@@ -26,7 +26,7 @@ jobs:
       - name: terraform destroy
         uses: dflook/terraform-destroy@v1
         with:
-          path: root
+          path: bucket
           workspace: ${{ env.TF_WORKSPACE }}
           configuration_version: ${{ steps.apply-upload.outputs.configuration_version_id }}
           

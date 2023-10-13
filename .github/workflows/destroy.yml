@@ -30,4 +30,5 @@ jobs:
         uses: Samuelking011/tfc-github_action-workflows/actions/create-destroy@v1.0.0
         id: destroy
         with:
-          plan: ${{ steps.run.outputs.plan_id }}
+           workspace: ${{ env.TF_WORKSPACE }}
+           configuration_version: ${{ steps.apply-upload.outputs.configuration_version_id }}

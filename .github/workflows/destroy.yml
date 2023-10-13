@@ -1,4 +1,4 @@
-name: Destroy S3 bucket
+name: "Destroy S3 bucket"
 on:
   workflow_dispatch:
 
@@ -26,9 +26,9 @@ jobs:
           workspace: ${{ env.TF_WORKSPACE }}
           directory: ${{ env.CONFIG_DIRECTORY }}
           
-      - name: create destroy
+      - name: Create Apply destroy
         uses: Samuelking011/tfc-github_action-workflows/actions/create-destroy@v1.0.0
-        id: apply
+        id: apply-run
         with:
            workspace: ${{ env.TF_WORKSPACE }}
            configuration_version: ${{ steps.apply-upload.outputs.configuration_version_id }}

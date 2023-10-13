@@ -25,11 +25,16 @@ jobs:
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           directory: ${{ env.CONFIG_DIRECTORY }}
-          speculative: true
-
+          
       - name: Create Plan Run
-        uses: dflook/terraform-destroy@v1
-        id: plan-run
+        uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.4
+        id: plan-output
         with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          #configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
+          plan: ${{ steps.run.outputs.plan_id }}
+
+      - name: Reference Plan Output
+        run: |
+          echo "Plan status: ${{ steps.plan-output.outputs.plan_status }}"
+          echo "Resources to Add: ${{ steps.plan-output.outputs.add }}"
+          echo "Resources to Change: ${{ steps.plan-output.outputs.change }}"
+          echo "Resources to Destroy: ${{ steps.plan-output.outputs.destroy }}"

@@ -28,7 +28,7 @@ jobs:
           speculative: true
 
       - name: Create Plan Run
-        uses: hashicorp/tfc-workflows-github/actions/destroy-run@v1.0.4
+        uses: "terraform plan -destory"
         id: plan-run
         with:
           workspace: ${{ env.TF_WORKSPACE }}

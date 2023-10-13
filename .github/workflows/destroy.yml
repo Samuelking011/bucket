@@ -33,4 +33,4 @@ jobs:
         run: |
           terraform init
           terraform plan -destroy -out=destroy.tfplan
-          terraform apply destroy.tfplan
+          #terraform apply destroy.tfplan

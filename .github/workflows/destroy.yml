@@ -27,10 +27,10 @@ jobs:
           directory: ${{ env.CONFIG_DIRECTORY }}
 
       - name: Terraform destroy
+        uses: dflook/terraform-destroy@v1
         id:   apply
-        env:
-          TF_WORKSPACE: "learn-terraform-github-actions"
-        run: |
-          terraform init
-          terraform plan -destroy -out=destroy.tfplan
-          #terraform apply destroy.tfplan
+        with:
+          run: |
+            terraform init
+            terraform plan -destroy -out=destroy.tfplan
+            #terraform apply destroy.tfplan

@@ -2,6 +2,12 @@ name: Destroy S3 bucket
 on:
   workflow_dispatch:
 
+env:
+  TF_CLOUD_ORGANIZATION: "Sammyvirtual-solution"
+  TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
+  TF_WORKSPACE: "learn-terraform-github-actions"
+  CONFIG_DIRECTORY: "./"
+
 jobs:
   terraform:
     if: github.repository != 'hashicorp-education/learn-terraform-github-actions'
@@ -13,13 +19,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Upload Configuration
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
+        id: apply-upload
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          directory: ${{ env.CONFIG_DIRECTORY }}
+
       - name: Terraform destroy
         id:   apply
-        env:
-          TF_CLOUD_ORGANIZATION: "Sammyvirtual-solution"
-          TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
-          TF_WORKSPACE: "learn-terraform-github-actions"
-          CONFIG_DIRECTORY: "./"
         run: |
           terraform init
           terraform plan -destroy -out=destroy.tfplan

@@ -28,6 +28,8 @@ jobs:
 
       - name: Terraform destroy
         id:   apply
+        env:
+          TF_WORKSPACE: "learn-terraform-github-actions"
         run: |
           terraform init
           terraform plan -destroy -out=destroy.tfplan

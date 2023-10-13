@@ -27,7 +27,7 @@ jobs:
           directory: ${{ env.CONFIG_DIRECTORY }}
           
       - name: create destroy
-        uses: Samuelking011/tfc-github_action-workflows/actions/create-destroy@v
+        uses: Samuelking011/tfc-github_action-workflows/actions/create-destroy@v1.1
         id: destroy
         with:
           workspace: ${{ env.TF_WORKSPACE }}

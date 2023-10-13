@@ -9,15 +9,12 @@ env:
   CONFIG_DIRECTORY: "./"
 
 jobs:
-  terraform:
-    if: github.repository != 'hashicorp-education/learn-terraform-github-actions'
-    name: "Terraform Destroy"
+  destroy_workspace:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    name: Destroy terraform workspace
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Upload Configuration
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
@@ -25,10 +22,11 @@ jobs:
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           directory: ${{ env.CONFIG_DIRECTORY }}
-          
-      - name: Create Apply Run
-        uses: Samuelking011/tfc-github_action-workflows/actions/create-destroy@v1.0.0
-        id: apply-run
+
+      - name: terraform destroy
+        uses: dflook/terraform-destroy@v1
         with:
+          path: my-terraform-config
           workspace: ${{ env.TF_WORKSPACE }}
           configuration_version: ${{ steps.apply-upload.outputs.configuration_version_id }}
+          

@@ -28,7 +28,7 @@ jobs:
           speculative: true
 
       - name: Create Plan Run
-        uses: "terraform plan -destory"
+        uses: dflook/terraform-destroy@v1
         id: plan-run
         with:
           workspace: ${{ env.TF_WORKSPACE }}

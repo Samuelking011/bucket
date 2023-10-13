@@ -26,15 +26,9 @@ jobs:
           workspace: ${{ env.TF_WORKSPACE }}
           directory: ${{ env.CONFIG_DIRECTORY }}
           
-      - name: Create Plan Run
-        uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.4
-        id: plan-output
+      - name: create destroy
+        uses: Samuelking011/tfc-github_action-workflows/actions/create-destroy@v1
+        id: destroy
         with:
-          plan: ${{ steps.run.outputs.plan_id }}
-
-      - name: Reference Plan Output
-        run: |
-          echo "Plan status: ${{ steps.plan-output.outputs.plan_status }}"
-          echo "Resources to Add: ${{ steps.plan-output.outputs.add }}"
-          echo "Resources to Change: ${{ steps.plan-output.outputs.change }}"
-          echo "Resources to Destroy: ${{ steps.plan-output.outputs.destroy }}"
+          workspace: ${{ env.TF_WORKSPACE }}
+          configuration_version: ${{ steps.apply-upload.outputs.configuration_version_id }}

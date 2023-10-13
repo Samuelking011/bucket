@@ -25,6 +25,7 @@ jobs:
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           directory: ${{ env.CONFIG_DIRECTORY }}
+          speculative: true
 
       - name: Terraform destroy
         uses: dflook/terraform-destroy@v1

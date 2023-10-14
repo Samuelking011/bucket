@@ -27,7 +27,7 @@ jobs:
           directory: ${{ env.CONFIG_DIRECTORY }}
 
       - name: Create Apply Run
-        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.4
+        uses: Samuelking011/terraform-action-workflow/actions/create-run@v1.0.0
         id: apply-run
         with:
           workspace: ${{ env.TF_WORKSPACE }}

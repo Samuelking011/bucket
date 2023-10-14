@@ -26,9 +26,9 @@ jobs:
           workspace: ${{ env.TF_WORKSPACE }}
           directory: ${{ env.CONFIG_DIRECTORY }}
 
-      - name: Create Apply Run
-        uses: Samuelking011/terraform-action-workflow/actions/create-run@v1.0.0
-        id: apply-run
+      - name: destroy
+        uses: dflook/terraform-destroy@v1
+        id: destroy
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           configuration_version: ${{ steps.apply-upload.outputs.configuration_version_id }}

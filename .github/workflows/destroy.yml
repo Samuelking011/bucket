@@ -30,5 +30,7 @@ jobs:
         uses: dflook/terraform-destroy@v1
         id: destroy
         with:
+          TF_CLOUD_ORGANIZATION: "Sammyvirtual-solution"
+          TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
           workspace: ${{ env.TF_WORKSPACE }}
           configuration_version: ${{ steps.apply-upload.outputs.configuration_version_id }}

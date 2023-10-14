@@ -31,4 +31,6 @@ jobs:
            workspace: ${{ env.TF_WORKSPACE }}
            configuration_version: ${{ steps.apply-upload.outputs.configuration_version_id }}
         run:
-          terraform apply -destroy
+          terraform init
+          terraform plan -destroy
+          terraform apply -destroy -auto-approve

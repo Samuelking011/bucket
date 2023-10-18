@@ -16,7 +16,7 @@ jobs:
 
     - name: terraform login
       run:
-        terraform login
+        terraform login -auto-approve
     
     - name: terraform init
       run: |

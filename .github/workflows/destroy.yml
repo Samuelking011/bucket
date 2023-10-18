@@ -13,13 +13,13 @@ jobs:
 
     - name: Create .terraformrc file locally
       run: |
-          echo "credentials \"app.terraform.io\" " > $HOME/.terraformrc
+          echo "credentials \"app.terraform.io\" {token = \"$TERRAFORM_TOKEN\"}" > $HOME/.terraformrc
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
     
     - name: terraform init
       run: |
-        terraform login "app.terraform.io" -auto-approve
+        terraform login "TF_TOKEN_app_terraform_io" -auto-approve
         terraform init
         path: ./terraform/ecs

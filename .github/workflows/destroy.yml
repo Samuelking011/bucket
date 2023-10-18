@@ -2,9 +2,6 @@ name: "Terraform Apply"
 
 on:
   workflow_dispatch:
-
-env:
-  TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
   
 jobs:
   deploy:
@@ -17,11 +14,7 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
 
-    - name: Upload Configuration
-      uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
-      with:
-        token: ${{ env.TF_API_TOKEN }}
-      
+    
     - name: terraform init
       run: |
         terraform init

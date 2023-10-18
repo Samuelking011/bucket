@@ -16,7 +16,7 @@ jobs:
 
     - name: Create .terraformrc file locally
       run: |
-          echo "credentials \"app.terraform.io\" {token = \"$TERRAFORM_TOKEN\"}"
+          echo "credentials \"app.terraform.io\" {token = \"$TERRAFORM_TOKEN\"}" > $HOME/.terraformrc
     
     - name: terraform init
       run: |

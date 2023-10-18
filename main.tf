@@ -1,7 +1,6 @@
 terraform {
   required_version = ">= 0.13.5"
   backend "remote" {
-    hostname      = "app.terraform.io"
     organization = "Sammyvirtual-solution"
 
     workspaces {

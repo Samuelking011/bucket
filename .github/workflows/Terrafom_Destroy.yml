@@ -17,12 +17,11 @@ jobs:
         terraform_version: "1.1.7"
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    - run: terraform init
+    - name: Terraform Init
+      run: 
+        terraform init
 
-    - id: plan
-      run: terraform plan -no-color
-
-    - name: Terraform apply
+    - name: Terraform Destory
       run: 
         terraform destroy -auto-approve
 

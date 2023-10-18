@@ -14,11 +14,10 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
 
-    - name: create file
-      id: file
-      run: |
-        name: Create .terraformrc file locally
-        command: echo "credentials \"app.terraform.io\" {token = \"$secrets.TF_API_TOKEN\"}" > $HOME/.terraformrc
+    - name: Upload Configuration
+      uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
+      with:
+        TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
       
     - name: terraform init
       run: |

@@ -14,9 +14,9 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
 
-    - name: terraform login
-      run:
-        terraform login -auto-approve
+    - name: Create .terraformrc file locally
+      run: |
+          command: echo "credentials \"app.terraform.io\" {token = \"$TERRAFORM_TOKEN\"}" > $HOME/.terraformrc
     
     - name: terraform init
       run: |

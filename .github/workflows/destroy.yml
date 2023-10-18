@@ -16,5 +16,6 @@ jobs:
       
     - name: terraform init
       run: |
+        terraform login
         terraform init
         path: ./terraform/ecs

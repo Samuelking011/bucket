@@ -1,33 +1,47 @@
-name: "Destroy S3 bucket"
+name: "Terraform Apply"
+
 on:
   workflow_dispatch:
-
-env:
-  TF_CLOUD_ORGANIZATION: "Sammyvirtual-solution"
-  TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
-  TF_WORKSPACE: "bucket"
-  CONFIG_DIRECTORY: "./"
-
+  
 jobs:
-  terraform:
-    if: github.repository != 'hashicorp-education/learn-terraform-github-actions'
-    name: "Terraform Apply"
+ deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Upload Configuration
-        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
-        id: apply-upload
-        with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          directory: ${{ env.CONFIG_DIRECTORY }}
-
-      - name: destroy
-        run: |
-          terraform init
-          terraform plan -destroy
-          terraform apply -destroy -auto-approve
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+  deploy_aws_ecs:
+    machine:
+      image: ubuntu-2004:202101-01
+    resource_class: arm.medium
+    steps:
+      - checkout
+      - run:
+          name: Create .terraformrc file locally
+          command: echo "credentials \"app.terraform.io\" {token = \"$TERRAFORM_TOKEN\"}" > $HOME/.terraformrc
+      - terraform/install:
+          terraform_version: "1.0.2"
+          arch: "arm64"
+          os: "linux"
+      - terraform/init:
+          path: ./terraform/ecs
+      - terraform/plan:
+          path: ./terraform/ecs
+      - run:
+          name: Terraform apply
+          command: |
+            terraform -chdir=./terraform/ecs apply \
+              -var docker_img_name=${DOCKER_LOGIN}/${CIRCLE_PROJECT_REPONAME} \
+              -var docker_img_tag=0.1.<< pipeline.number >> \
+              -auto-approve
+            export ENDPOINT="$(terraform -chdir=./terraform/ecs output load_balancer_hostname)"
+            mkdir -p /tmp/ecs/
+            echo 'export ENDPOINT='${ENDPOINT} > /tmp/ecs/endpoint
+      - persist_to_workspace:
+          root: /tmp/ecs/
+          paths:
+            - "*"      
+      
